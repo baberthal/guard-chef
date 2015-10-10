@@ -1,6 +1,6 @@
 require 'guard/compat/plugin'
-require 'guard/chef/version'
 require 'guard/chef/options'
+require 'guard/chef/version'
 require 'guard/chef/runner'
 
 module Guard

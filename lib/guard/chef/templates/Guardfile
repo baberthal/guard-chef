@@ -1,0 +1,24 @@
+guard :chef, cmd: 'chef exec rspec' do
+  require 'guard/chef/dsl'
+  dsl = Guard::Chef::Dsl.new(self)
+
+  # ChefSpec files
+  chefspec = dsl.chefspec
+  watch(chefspec.spec_helper) { chefspec.spec_dir }
+  watch(chefspec.spec_support) { chefspec.spec_dir }
+  watch(chefspec.spec_files)
+
+  # Standard ruby files (not including cookbook libraries)
+  ruby = dsl.ruby
+  dsl.watch_spec_files_for(ruby.lib_files)
+
+  # Cookbook files
+  cookbook = dsl.cookbook
+  dsl.watch_spec_files_for(cookbook.recipes)
+  dsl.watch_spec_files_for(cookbook.attributes)
+  dsl.watch_spec_files_for(cookbook.libraries)
+  dsl.watch_spec_files_for(cookbook.providers)
+  dsl.watch_spec_files_for(cookbook.resources)
+end
+
+#  vim: set ts=8 sw=2 tw=0 ft=ruby et :
