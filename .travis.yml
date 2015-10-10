@@ -4,5 +4,6 @@ rvm:
   - 2.2.0
   - 2.2.3
   - rbx-2.5.8
+gemfile:
+  - Gemfile.ci
 before_install: gem install bundler -v 1.10.6
-bundler_args: --without local
