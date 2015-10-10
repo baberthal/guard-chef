@@ -1,0 +1,8 @@
+build
+install
+install:local
+release
+rubocop
+rubocop:auto_correct
+spec
+test:all_versions
