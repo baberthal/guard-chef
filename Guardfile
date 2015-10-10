@@ -1,30 +1,28 @@
 notification :gntp, host: '127.0.0.1'
 
-group :specs, halt_on_fail: true do
-  guard :rspec, cmd: "bundle exec rspec" do
-    require "guard/rspec/dsl"
-    dsl = Guard::RSpec::Dsl.new(self)
+rspec_options = {
+  cmd: 'rspec',
+  failed_mode: :focus,
+  all_after_pass: true
+}
 
-    # RSpec files
-    rspec = dsl.rspec
-    watch(rspec.spec_helper) { rspec.spec_dir }
-    watch(rspec.spec_support) { rspec.spec_dir }
-    watch(rspec.spec_files)
+guard :rspec, rspec_options do
+  require 'guard/rspec/dsl'
+  dsl = Guard::RSpec::Dsl.new(self)
 
-    # Ruby files
-    ruby = dsl.ruby
-    dsl.watch_spec_files_for(ruby.lib_files)
+  # RSpec files
+  rspec = dsl.rspec
+  watch(rspec.spec_helper) { rspec.spec_dir }
+  watch(rspec.spec_support) { rspec.spec_dir }
+  watch(rspec.spec_files)
 
-    watch(%r{^(lib/guard/rspec/template)s/Guardfile$}) do
-      rspec.spec.('lib/guard/rspec/template')
-    end
-  end
+  # Ruby files
+  ruby = dsl.ruby
+  dsl.watch_spec_files_for(ruby.lib_files)
 
-  guard :rubocop, all_on_start: false do
-    watch(%r{.+\.rb$})
-    watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
+  watch(%r{^(lib/guard/rspec/template)s/Guardfile$}) do
+    rspec.spec.('lib/guard/rspec/template')
   end
 end
 
 #  vim: set ts=8 sw=2 tw=0 ft=ruby et :
-

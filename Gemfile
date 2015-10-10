@@ -23,10 +23,8 @@ group :development do
   gem 'pry-theme', require: false
   gem 'parser', '>= 2.2.2.5', '< 3.0'
   gem 'overcommit', require: false
-  gem 'flog', require: false
   gem 'ruby-lint', require: false, path: '/Users/morgan/projects/ruby/oss-forks/ruby-lint'
-  gem 'reek', require: false
-  gem 'flay', require: false
+  gem 'rubycritic', require: false
 end
 
 group :tool do
